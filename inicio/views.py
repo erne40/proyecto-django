@@ -5,6 +5,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.template import Template, Context, loader
 from inicio.models import Animal
+from django.shortcuts import render
 
 def mi_vista(request):
     print('Pase por aca')
@@ -35,7 +36,9 @@ def mostrar_fecha(request):
     """ archivo = open(r'mostrar_fecha.html', 'r')
     template = Template(archivo.read())
     archivo.close() """
-    template = loader.get_template(r'mostrar_fecha.html')
+    template = loader.get_template(r'inicio/mostrar_fecha.html')
+    
+    datos = {'fecha': dt_formateado}
     
     """ contexto = Context({'fecha': dt_formateado})
     template_renderizado = template.render(contexto) """
@@ -55,7 +58,7 @@ def prueba_template(request):
         ]
         }
     
-    template = loader.get_template(r'prueba_template.html')
+    template = loader.get_template(r'inicio/prueba_template.html')
     template_renderizado = template.render(datos)
     return HttpResponse(template_renderizado)
 
@@ -65,6 +68,14 @@ def crear_animal(request):
     print(animal.edad)
     animal.save()
     datos = {'animal':animal}
-    template = loader.get_template(r'crear_animal.html')
+    template = loader.get_template(r'inicio/crear_animal.html')
     template_renderizado = template.render(datos)
-    return HttpResponse(template_renderizado)   
+    return HttpResponse(template_renderizado)
+
+def prueba_render(request):
+    datos = {'nombre': 'Pepe'}
+    # template = loader.get_template(r'prueba_render.html')
+    # template_renderizado = template.render(datos)
+    # return HttpResponse(template_renderizado)
+
+    return render(request, r'inicio/prueba_render.html', datos)
