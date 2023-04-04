@@ -8,8 +8,9 @@ from inicio.models import Animal
 from django.shortcuts import render
 
 def mi_vista(request):
-    print('Pase por aca')
-    return HttpResponse('<h1>Mi primera vista</h1>')
+    # print('Pase por aca')
+    # return HttpResponse('<h1>Mi primera vista</h1>')
+    return render(request, r'inicio/index.html')
 
 # Versión con HttpResponse:
 """ def mostrar_fecha(request):
