@@ -5,11 +5,15 @@
 {% endblock title_head %}
 
 {% block h1_header %}
-<h1>Muestro el animal creado!</h1>
+<h1>Crear animal</h1>
 {% endblock h1_header %}
 
 {% block contenido %}
-<li>
-    Nombre: {{animal.nombre}} - Edad: {{animal.edad}}
-</li>
+<form action= "" method= "POST">
+    {% csrf_token %}
+    <table>
+    {{formulario}}
+    </table>
+    <button>Crear</button>
+</form>
 {% endblock contenido %}

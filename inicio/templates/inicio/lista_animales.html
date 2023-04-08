@@ -1,0 +1,30 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Animales</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Lista de animales</h1>
+{% endblock h1_header %}
+
+
+{% block contenido %}
+<p>
+    <form action= "">
+        {{formulario}}
+        <button>Buscar</button>
+    </form>
+</p>
+
+{% if animales %}
+    {% for animal in animales %}
+    <li>
+        Nombre: {{animal.nombre}} - Edad: {{animal.edad}}
+    </li>
+    {% endfor %}
+
+{% else %}
+    <h2>No hay datos sobre animales</h2>
+{% endif %}
+{% endblock contenido %}

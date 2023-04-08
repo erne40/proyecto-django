@@ -1,0 +1,25 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Crear Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Crear animal</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+<form action= "" method= "POST">
+    {% csrf_token %}
+    <p>
+        Ingrese nombre:
+        <input type= "text" name= "nombre" placeholder="Pepito">
+    </p>
+    <p>
+        Ingrese edad:
+        <input type= "number" name = "edad"placeholder="15">
+    </p>
+    {% comment "" %}<input type= "submit" value="Crear">{% endcomment %}
+    <button>Crear</button>
+</form>
+{% endblock contenido %}
