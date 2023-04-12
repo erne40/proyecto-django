@@ -1,0 +1,18 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Animal {{animal}}</h1>
+{% endblock h1_header %}
+
+
+{% block contenido %}
+<ul>
+    <li>Nombre: {{animal.nombre}}</li>
+    <li>Edad: {{animal.edad}}</li>
+    <li>Cant. Dientes: {{animal.cant_dientes}}</li>
+</ul>
+{% endblock contenido %}

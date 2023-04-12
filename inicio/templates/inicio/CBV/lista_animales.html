@@ -10,15 +10,8 @@
 
 
 {% block contenido %}
-<p>
-    <form action= "">
-        {{formulario}}
-        <button>Buscar</button>
-    </form>
-</p>
-
-{% if animales %}
-    {% for animal in animales %}
+{% if object_list %}
+    {% for animal in object_list %}
     <li>
         <a class="navbar-brand" href={% url 'mostrar_animal' animal.id%}>{{animal}}</a>
         Nombre: {{animal.nombre}} - Edad: {{animal.edad}}

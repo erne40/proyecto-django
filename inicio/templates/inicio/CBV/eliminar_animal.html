@@ -1,0 +1,17 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Eliminar Animal</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1>Eliminar animal</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+<form action= {% url 'eliminar_animal' animal.id%} method= "POST">
+    {% csrf_token %}
+    <p>Confirmar eliminación de "{{animal.nombre}}"</p>
+    <button>Eliminar</button>
+</form>
+{% endblock contenido %}

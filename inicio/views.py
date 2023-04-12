@@ -6,7 +6,11 @@ from django.http import HttpResponse
 from django.template import Template, Context, loader
 from inicio.models import Animal
 from django.shortcuts import render, redirect
-from inicio.forms import CreacionAnimalFormulario , BuscarAnimal
+from inicio.forms import CreacionAnimalFormulario , BuscarAnimal, ModificarAnimalFormulario
+
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
 
 def mi_vista(request):
     # print('Pase por aca')
@@ -64,6 +68,18 @@ def prueba_template(request):
     template_renderizado = template.render(datos)
     return HttpResponse(template_renderizado)
 
+def prueba_render(request):
+    datos = {'nombre': 'Pepe'}
+    # template = loader.get_template(r'prueba_render.html')
+    # template_renderizado = template.render(datos)
+    # return HttpResponse(template_renderizado)
+
+    return render(request, r'inicio/prueba_render.html', datos)
+
+# ----------------------
+# Vistas comunes para animales
+# ----------------------
+
 #v1
 """ def crear_animal(request):
     animal = Animal(nombre='Ricardito', edad=3)
@@ -120,10 +136,63 @@ def lista_animales(request):
     formulario_busqueda = BuscarAnimal()
     return render(request, 'inicio/lista_animales.html', {'animales': animales, 'formulario': formulario_busqueda})
 
-def prueba_render(request):
-    datos = {'nombre': 'Pepe'}
-    # template = loader.get_template(r'prueba_render.html')
-    # template_renderizado = template.render(datos)
-    # return HttpResponse(template_renderizado)
+def eliminar_animal(request, id_animal):
+    id_animal
+    animal_a_eliminar = Animal.objects.get(id=id_animal)
+    animal_a_eliminar.delete()
+    return redirect('lista_animales')
 
-    return render(request, r'inicio/prueba_render.html', datos)
+def mostrar_animal(request, id_animal):
+    id_animal
+    animal_a_mostrar = Animal.objects.get(id=id_animal)
+    return render(request, 'inicio/mostrar_animal.html', {'animal_a_mostrar': animal_a_mostrar})
+
+def modificar_animal(request, id_animal):
+    id_animal
+    animal_a_modificar = Animal.objects.get(id=id_animal)
+    if request.method == "POST":
+        formulario = ModificarAnimalFormulario(request.POST)
+        if formulario.is_valid():
+            data_limpia = formulario.cleaned_data
+            animal_a_modificar.nombre = data_limpia['nombre']
+            animal_a_modificar.edad = data_limpia['edad']
+            animal_a_modificar.save()
+            
+            return redirect('lista_animales')
+        else:
+            return render(request, 'inicio/modificar_animal.html', {"formulario": formulario, "id_animal": id_animal})
+    
+    formulario = ModificarAnimalFormulario(initial={'nombre': animal_a_modificar.nombre, 'edad': animal_a_modificar.edad})
+    return render(request, 'inicio/modificar_animal.html', {"formulario": formulario, "id_animal": id_animal})
+
+# ----------------------
+# CBV (Clases Basadas en Vistas) para animales
+# ----------------------
+
+class ListaAnimales(ListView):
+    model = Animal
+    template_name = 'inicio/CBV/lista_animales.html'
+
+class CrearAnimal(CreateView):
+    model = Animal
+    template_name = 'inicio/CBV/crear_animal_v3.html'
+    success_url = '/inicio/animales/'
+    fields = ['nombre', 'edad']
+
+class ModificarAnimal(UpdateView):
+    model = Animal
+    template_name = 'inicio/CBV/modificar_animal.html'
+    success_url = '/inicio/animales/'
+    fields = ['nombre', 'edad', 'cant_dientes']
+    # Se puede usar:
+    # form = ...
+
+class EliminarAnimal(DeleteView):
+    model = Animal
+    template_name = 'inicio/CBV/eliminar_animal.html'
+    success_url = '/inicio/animales/'
+
+class MostrarAnimal(DetailView):
+    model = Animal
+    template_name = 'inicio/CBV/mostrar_animal.html'
+    
