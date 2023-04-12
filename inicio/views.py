@@ -104,13 +104,19 @@ def crear_animal(request):
 def lista_animales(request):
     nombre_a_buscar = request.GET.get('nombre', None)
     
-    if nombre_a_buscar:
+    #Deprecado
+    """ if nombre_a_buscar:
         animales = Animal.objects.filter()
     else:
-        animales = Animal.objects.all(nombre__icontains=nombre_a_buscar)
+        animales = Animal.objects.all(nombre__icontains=nombre_a_buscar) """
     
-    animales = Animal.objects.all()
-    # print(animales)
+    #Versión buena
+    if nombre_a_buscar:
+        animales = Animal.objects.filter(nombre__icontains=nombre_a_buscar)
+    else:
+        animales = Animal.objects.all()
+    
+    #animales = Animal.objects.all()
     formulario_busqueda = BuscarAnimal()
     return render(request, 'inicio/lista_animales.html', {'animales': animales, 'formulario': formulario_busqueda})
 
