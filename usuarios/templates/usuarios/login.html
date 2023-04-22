@@ -1,0 +1,25 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Inicio de sesión</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1 id="signup">Inicio de sesión</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if formulario.errors %}
+<p style='color:red'>Hay errores</p>
+{% endif %}
+
+<form action={% url 'usuarios:login' %} method="post">
+    {% csrf_token %}
+    <table>
+        {{formulario}}
+    </table>
+    <button>Iniciar sesión</button>
+</form>
+{% endblock contenido %}
+

@@ -22,14 +22,22 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="navbar-brand" href="#!">Inicio</a>
+                <a class="navbar-brand" href={% url 'inicio' %} >Inicio</a>
                 <a class="navbar-brand" href={% url 'mostrar_fecha' %}>Mostrar Fecha</a>
-                <a class="navbar-brand" href={% url 'mi_primer_template' %}>Mi Primer Template</a>
-                <a class="navbar-brand" href={% url 'prueba_template' %}>Prueba Template</a>
                 <a class="navbar-brand" href={% url 'crear_animal' %}>Crear Animal</a>
                 <a class="navbar-brand" href={% url 'lista_animales' %}>Animales</a>
+                {% comment "Deprecated" %}
                 <a class="navbar-brand" href={% url 'prueba_render' %}>Prueba Render</a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="navbar-brand" href={% url 'mi_primer_template' %}>Mi Primer Template</a>
+                <a class="navbar-brand" href={% url 'prueba_template' %}>Prueba Template</a>
+                <a class="btn btn-primary" href= {% url 'usuarios/login' %}>Iniciar sesión</a>
+                {% endcomment %}
+                <a class="navbar-brand" href={% url 'prueba_render' %}>Prueba Render</a>
+
+                <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/login'>Iniciar sesión</a>
+                <a href='#'>{{request.user.username}}</a>
+                <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/logout'>Cerrar sesión</a>
+                <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/registro'>Registrarse</a>
             </div>
         </nav>
         <!-- Masthead-->
@@ -41,7 +49,7 @@
                         <div class="text-center text-white">
                             <!-- Page heading-->
                             {% block h1_header %}
-                            <h1 class="mb-5">Estás usando el H1 Base</h1>
+                            <h1 id="signup" class="mb-5">Estás usando el H1 Base</h1>
                             {% endblock h1_header %}
                         </div>
                     </div>

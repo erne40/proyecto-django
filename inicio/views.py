@@ -11,6 +11,8 @@ from inicio.forms import CreacionAnimalFormulario , BuscarAnimal, ModificarAnima
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 def mi_vista(request):
     # print('Pase por aca')
@@ -68,6 +70,7 @@ def prueba_template(request):
     template_renderizado = template.render(datos)
     return HttpResponse(template_renderizado)
 
+@login_required
 def prueba_render(request):
     datos = {'nombre': 'Pepe'}
     # template = loader.get_template(r'prueba_render.html')
@@ -179,7 +182,7 @@ class CrearAnimal(CreateView):
     success_url = '/inicio/animales/'
     fields = ['nombre', 'edad']
 
-class ModificarAnimal(UpdateView):
+class ModificarAnimal(LoginRequiredMixin, UpdateView):
     model = Animal
     template_name = 'inicio/CBV/modificar_animal.html'
     success_url = '/inicio/animales/'
@@ -187,7 +190,7 @@ class ModificarAnimal(UpdateView):
     # Se puede usar:
     # form = ...
 
-class EliminarAnimal(DeleteView):
+class EliminarAnimal(LoginRequiredMixin, DeleteView): # Primero debe heredar el Mixin
     model = Animal
     template_name = 'inicio/CBV/eliminar_animal.html'
     success_url = '/inicio/animales/'
