@@ -34,10 +34,14 @@
                 {% endcomment %}
                 <a class="navbar-brand" href={% url 'prueba_render' %}>Prueba Render</a>
 
-                <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/login'>Iniciar sesión</a>
-                <a href='#'>{{request.user.username}}</a>
+                {% if request.user.is_authenticated %}
+                {% comment "Si usaramos avatares" %} <img src={{request.user.informacionextra.avatar.url}}></img> {% endcomment %}
+                <a href={% url 'usuarios:editar_perfil' %}>{{request.user.username}}</a>
                 <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/logout'>Cerrar sesión</a>
+                {% else %}
+                <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/login'>Iniciar sesión</a>
                 <a class="btn btn-primary" href= 'http://127.0.0.1:8000/usuarios/registro'>Registrarse</a>
+                {% endif %}
             </div>
         </nav>
         <!-- Masthead-->

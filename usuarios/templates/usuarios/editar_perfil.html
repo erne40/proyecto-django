@@ -1,0 +1,26 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Editar Perfil</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1 id="signup">Editar Perfil</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if formulario.errors %}
+<p style='color:red'>Hay errores</p>
+{% endif %}
+
+<form action='' method="post", enctype='multipart/form-data'>
+    {% csrf_token %}
+    <table>
+        {{formulario}}
+    </table>
+    <button type='button'><a class="navbar-brand" href={% url 'usuarios:cambiar_contrasena' %}>Cambiar contraseña</a></button>
+    <button>Guardar cambios</button>
+</form>
+{% endblock contenido %}
+

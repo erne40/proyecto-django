@@ -1,0 +1,25 @@
+{% extends 'genericos/base.html' %}
+
+{% block title_head %}
+<title>Cambio de contraseña</title>
+{% endblock title_head %}
+
+{% block h1_header %}
+<h1 id="signup">Cambio de contraseña</h1>
+{% endblock h1_header %}
+
+{% block contenido %}
+
+{% if form.errors %}
+<p style='color:red'>Hay errores</p>
+{% endif %}
+
+<form action={% url 'usuarios:cambiar_contrasena' %} method="post">
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button>Cambio de contraseña</button>
+</form>
+{% endblock contenido %}
+
